@@ -1,0 +1,19 @@
+<script src="/socket.io/socket.io.js"></script>
+<h1><%= stock %></h1>
+<h2 id="info"><%= stockInfo %></h2>
+<script>
+    const STOCK = "<%= stock %>";
+    const stockInfo = JSON.parse("<%= stockInfo %>");
+
+    console.log(stockInfo);
+
+    var socket = io('/');
+    socket.emit('join', STOCK);
+
+    socket.on(STOCK, (message) => {
+        message = JSON.parse(message);
+        console.log(message);
+        const info = document.getElementById("info"); 
+        info.textContent = message.symbol;
+    });
+</script>
